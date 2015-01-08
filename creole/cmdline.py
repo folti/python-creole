@@ -13,7 +13,7 @@ from __future__ import division, absolute_import, print_function, unicode_litera
 import argparse
 import codecs
 
-from creole import creole2html, html2creole, html2rest, html2textile
+from creole import creole2html, html2creole, html2rest, html2textile, html2jira
 from creole import VERSION_STRING
 
 
@@ -71,6 +71,10 @@ def cli_html2rest():
     
 def cli_html2textile():
     cli = CreoleCLI(html2textile)
+#     cli.convert()
+
+def cli_html2jira():
+    cli = CreoleCLI(html2jira)
 #     cli.convert()
 
 

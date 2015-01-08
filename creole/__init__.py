@@ -32,6 +32,7 @@ from creole.creole2html.emitter import HtmlEmitter
 from creole.creole2html.parser import BlockRules, CreoleParser
 from creole.html2creole.emitter import CreoleEmitter
 from creole.html2rest.emitter import ReStructuredTextEmitter
+from creole.html2jira.emitter import JiraTextEmitter
 from creole.html2textile.emitter import TextileEmitter
 from creole.html_parser.parser import HtmlParser
 from creole.py3compat import TEXT_TYPE
@@ -176,6 +177,32 @@ def html2rest(html_string, debug=False,
     emitter = ReStructuredTextEmitter(document_tree, debug=debug, **emitter_kwargs2)
     return emitter.emit()
 
+
+def html2jira(html_string, debug=False,
+              parser_kwargs={}, emitter_kwargs={},
+              unknown_emit=None
+    ):
+    """
+    convert html code into JiraText markup
+
+    >>> html2rest('<p>This is <strong>JiraText</strong> <em>markup</em>!</p>')
+    'This is **ReStructuredText** *markup*!'
+    """
+    if parser_kwargs:
+        warnings.warn("parser_kwargs argument in html2rest would be removed in the future!", PendingDeprecationWarning)
+
+    document_tree = parse_html(html_string, debug=debug)
+
+    emitter_kwargs2 = {
+        "unknown_emit": unknown_emit,
+        }
+    if emitter_kwargs:
+        warnings.warn("emitter_kwargs argument in html2rest would be removed in the future!", PendingDeprecationWarning)
+        emitter_kwargs2.update(emitter_kwargs)
+
+    # create ReStructuredText markup from the document tree
+    emitter = JiraTextEmitter(document_tree, debug=debug, **emitter_kwargs2)
+    return emitter.emit()
 
 
 if __name__ == '__main__':

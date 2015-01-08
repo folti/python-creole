@@ -77,5 +77,12 @@ class CreoleCLITests(BaseCreoleTest):
             cli_func=cli_html2textile
         )
 
+    def test_html2jira(self):
+        self._test_convert(
+            source_content=b"<h1>test html2jira</h1>",
+            dest_content=b"h1. test html2jira",
+            cli_func=cli_html2textile
+        )
+
 if __name__ == '__main__':
     unittest.main()

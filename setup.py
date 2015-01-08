@@ -51,10 +51,11 @@ setup(
             "html2creole = creole.cmdline:cli_html2creole",
             "html2rest = creole.cmdline:cli_html2rest",
             "html2textile = creole.cmdline:cli_html2textile",
+            "html2jira = creole.cmdline:cli_html2jira",
         ],
     },
     zip_safe=True, # http://packages.python.org/distribute/setuptools.html#setting-the-zip-safe-flag
-    keywords="creole markup creole2html html2creole rest2html html2rest html2textile",
+    keywords="creole markup creole2html html2creole rest2html html2rest html2textile html2jira",
     classifiers=[
         # http://pypi.python.org/pypi?%3Aaction=list_classifiers
 #        "Development Status :: 4 - Beta",

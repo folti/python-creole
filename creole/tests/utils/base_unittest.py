@@ -33,7 +33,7 @@ else:
 
 
 from creole.exceptions import DocutilsImportError
-from creole import creole2html, html2creole, html2textile, html2rest
+from creole import creole2html, html2creole, html2textile, html2rest, html2jira
 
 try:
     from creole.rest2html.clean_writer import rest2html
@@ -278,7 +278,7 @@ class BaseCreoleTest(MarkupTest):
         self.assertEqual(html_string, html, msg="textile2html")
 
     def assert_html2rest(self, rest_string, html_string, \
-                        strip_lines=False, debug=False, parser_kwargs={}, emitter_kwargs={}):
+                         strip_lines=False, debug=False, parser_kwargs={}, emitter_kwargs={}):
         """
         Check html to reStructuredText converter
         """
@@ -327,6 +327,30 @@ class BaseCreoleTest(MarkupTest):
             html = strip_html_lines(html, strip_lines)
 
         self.assertEqual(html, html_string, msg="rest2html")
+
+    def assert_html2jira(self, rest_string, html_string, \
+                         strip_lines=False, debug=False, parser_kwargs={}, emitter_kwargs={}):
+        """
+        Check html to reStructuredText converter
+        """
+        self.assertNotEqual(rest_string, html_string)
+
+        rest_string = self._prepare_text(rest_string)
+        html_string = self._prepare_text(html_string)
+
+        if strip_lines:
+            html_string = strip_html_lines(html_string, strip_lines)
+
+        # compare html -> reStructuredText
+        rest_string2 = html2jira(html_string, debug, parser_kwargs, emitter_kwargs)
+        if debug:
+            print("-" * 79)
+            print(rest_string2)
+            print("-" * 79)
+
+        self.assertEqual(rest_string2, rest_string, msg="html2jira")
+
+        return rest_string, html_string
 
     def cross_compare_rest(self, rest_string, html_string, \
                         strip_lines=False, debug=False, parser_kwargs={}, emitter_kwargs={}):
