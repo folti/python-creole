@@ -184,6 +184,15 @@ class JiraTextEmitter(BaseEmitter):
         link_text = self.emit_children(node)
         url = None
         anchor = None
+
+        if 'class' in node.attrs:
+          if node.attrs['class'] in ('moz-txt-link-rfc2396e', 'moz-txt-link-rfc2396E'):
+            return '[mailto:%s]' % link_text
+          if node.attrs['class'] == 'moz-txt-link-freetext':
+            return '[%s]' % link_text
+          if node.attrs['class'] == 'moz-txt-link-abbreviated':
+            return link_text
+
         try:
           url = node.attrs["href"]
         except KeyError:
