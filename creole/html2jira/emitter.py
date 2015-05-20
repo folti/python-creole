@@ -76,7 +76,7 @@ class JiraTextEmitter(BaseEmitter):
         pre_block = self.deentity.replace_all(node.content).strip()
         print(pre_block)
         pre_block = "\n".join(["%s" % line for line in pre_block.splitlines()])
-        return "{quote}%s{quote}\n\n" % pre_block
+        return "{quote}\n%s\n{quote}\n\n" % pre_block
 
     def inlinedata_pre_emit(self, node):
         """ a pre inline block -> no newline at the end """
